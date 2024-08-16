@@ -27,7 +27,7 @@ export const signup = async (req, res) => {
             userName,
             password: hashedPassword,
             gender,
-            profilepic: gender === 'Male'? boyProfilePic : girlProfilePic
+            profilepic: gender === 'male'? boyProfilePic : girlProfilePic
         });
 
         if (newUser) {
@@ -51,31 +51,29 @@ export const signup = async (req, res) => {
         res.status(500).json({error:"Internal server error"})
     }
 };
-
+   
 export const login = async (req, res) => {
-    try {
-        const { userName, password } = req.body;
-        const user = await User.findOne({ userName });
-        const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");  
-        
-        if (!user ||!isPasswordCorrect) {
-            return res.status(400).json({ error: 'Invalid username or password' });
-        }
+	try {
+		const { userName, password } = req.body;
+		const user = await User.findOne({ userName });
+		const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
 
-        generateTokenAndSetCookie(user._id, res);
+		if (!user || !isPasswordCorrect) {
+			return res.status(400).json({ error: "Invalid username or password" });
+		}
 
-        res.status(200).json({
-            _id: user._id,
-            fullName: user.fullName,
-            userName: user.userName,
-            profilepic: user.profilepic
-        });
-        
-        
-    } catch (error) {
-        console.log("Error in login controller",error.message);
-        res.status(500).json({error:"Internal server error"})
-    }
+		generateTokenAndSetCookie(user._id, res);
+
+		res.status(200).json({
+			_id: user._id,
+			fullName: user.fullName,
+			userName: user.userName,
+			profilePic: user.profilepic,
+		});
+	} catch (error) {
+		console.log("Error in login controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
 };
 
 
