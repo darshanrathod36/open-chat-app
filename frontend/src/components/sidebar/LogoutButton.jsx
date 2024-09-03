@@ -8,7 +8,7 @@ function LogoutButton() {
 
   const { loading, logout } = useLogout();
   return (
-      <div className='  m-1 p-1  '>
+      <div className='pb-7 '>
       {!loading ? (
         <BiLogOut className="w-6 h-6 text-white cursor-pointer" onClick={logout}/>
       ) : (

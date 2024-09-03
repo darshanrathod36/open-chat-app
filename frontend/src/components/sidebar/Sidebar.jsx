@@ -6,17 +6,17 @@ import LogoutButton from './LogoutButton'
 
 function Sidebar() {
     return (
-        <div className=' border-r border-slate-500 p-4 flex flex-col'>
-            
+        // <div className=' border-r border-slate-500 p-4 flex flex-col '>
+        <div className=' md:min-w-[450px] p-4 flex flex-col border-r h-screen border-slate-500  '>
             <SearchInput />
 
             <div className='divider px-3 mb-0'></div>
 
             <Conversations />
 
-            <LogoutButton /> 
-        
-           
+            <LogoutButton />
+
+
         </div>
     )
 }

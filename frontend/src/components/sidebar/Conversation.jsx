@@ -1,11 +1,13 @@
 import React from 'react'
 import useConversation from '../../store/useConversation'
+import { useSocketContext } from '../../context/SocketContext';
 
 const Conversation = ({ conversation, lastIdx, emoji }) => {
     const { selectedConversation, setSelectedConversation } = useConversation();
 
     const isSelected = selectedConversation?._id === conversation._id;
-
+    const { onlineUsers } = useSocketContext();
+    const isOnline = onlineUsers.includes(conversation._id);
     return (
         <>
             <div
@@ -15,12 +17,9 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
                 onClick={() => setSelectedConversation(conversation)}
             >
 
-                <div className='avatar '>
-                     <div className='w-12 rounded-full'>
-                        <img
-                            src={conversation.profilepic}
-                            alt='user avatar'
-                        />
+                <div className={`avatar ${isOnline ? "online" : ""}`}>
+                    <div className='w-12 rounded-full'>
+                        <img src={conversation.profilepic} alt='user avatar' />
                     </div>
                 </div>
                 <div className='flex flex-col flex-1'>
@@ -30,7 +29,7 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
                     </div> 
                 </div>
             </div>
-            {!lastIdx && <div className='divider my-1 py-1 h-1'></div>}
+            {/* {!lastIdx && <div className='divider my-1 py-1 h-1'></div>} */}
         </>
 
     )
